@@ -1,0 +1,88 @@
+#+TITLE: zq is a lightweight processor for the ZeroMQ Property Language (4/ZPL)
+#+LATEX: \pagebreak
+
+* Overview
+
+  [[https://rfc.zeromq.org/spec:4/ZPL/][ZPL]] is a simple configuration language. ~zq~ is a simple tool for processing
+  streams of ZPL data.
+  
+* Why does this exist?
+
+  Because we need simple configuration formats, and tools to work with them. ZPL
+  is an excellent format, but lacks the convenience of a standalone tool for
+  processing on the commandline.
+
+* Installation
+
+  Grab the latest version for your platform from the [[https://github.com/colstrom/zq/releases][releases page]] and put it
+  somewhere in your =$PATH=.
+
+* Usage
+
+  Given a ZPL file like this one (taken from the 4/ZPL RFC):
+
+  #+BEGIN_SRC text
+    #
+    context
+        iothreads = 1
+        verbose = 1      #   Ask for a trace
+
+    main
+        type = zmq_queue
+        frontend
+            option
+                hwm = 1000
+                swap = 25000000
+                subscribe = "#2"
+            bind = tcp://eth0:5555
+        backend
+            bind = tcp://eth0:5556
+  
+  #+END_SRC
+
+  Using ~zq~ like this:
+
+  #+BEGIN_SRC shell
+    cat example.zpl | zq main frontend
+  #+END_SRC
+
+  Will output this:
+
+  #+BEGIN_EXAMPLE
+    option
+    hwm = 1000
+    swap = 25000000
+    subscribe = #2
+    bind = tcp://eth0:5555
+  #+END_EXAMPLE
+
+  Using ~zq~ like this:
+
+  #+BEGIN_SRC shell
+    cat example.zpl | zq main backend bind
+  #+END_SRC
+
+  Will output this:
+
+  #+BEGIN_EXAMPLE
+    tcp://eth0:5556
+  #+END_EXAMPLE
+
+* Building from Source
+
+  ~zq~ is written in Crystal, with no external dependencies. Building it should
+  be as simple as:
+
+  #+BEGIN_SRC shell
+    git clone https://github.com/colstrom/zq
+    cd zq
+    crystal build zq.cr
+  #+END_SRC
+
+* License
+
+  ~zq~ is available under the [[https://tldrlegal.com/license/mit-license][MIT License]]. See ~LICENSE.txt~ for the full text.
+
+* Contributors
+
+  - [[https://colstrom.github.io/][Chris Olstrom]] | [[mailto:chris@olstrom.com][e-mail]] | [[https://twitter.com/ChrisOlstrom][Twitter]]
