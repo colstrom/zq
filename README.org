@@ -50,9 +50,9 @@
 
   #+BEGIN_EXAMPLE
     option
-    hwm = 1000
-    swap = 25000000
-    subscribe = #2
+  	  hwm = 1000
+  	  swap = 25000000
+  	  subscribe = #2
     bind = tcp://eth0:5555
   #+END_EXAMPLE
 

@@ -42,7 +42,7 @@ module ZQ
   end
 
   def normalize_indentation(string)
-    step = string.sub /^(\t)*    /, "\\1\t"
+    step = string.sub /^(\t*)    /, "\\1\t"
     step == string ? trim_leading_spaces(step) : normalize_indentation(step)
   end
 
