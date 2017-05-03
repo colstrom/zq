@@ -93,4 +93,5 @@ module ZQ
   end
 end
 
-puts (ARGV.empty? ? ZQ.read(STDIN) : ZQ.walk(ARGV, ZQ.read(STDIN))).join("\n")
+data = (ARGV.empty? ? ZQ.read(STDIN) : ZQ.walk(ARGV, ZQ.read(STDIN))).join("\n")
+puts data unless data.blank?
